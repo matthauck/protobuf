@@ -99,13 +99,13 @@
     namespace tr1 {
 
     template<>
-    struct hash<long long int> {
-      std::size_t operator()(long long int val) const { return static_cast<std::size_t>(val); }
+    struct hash<google::protobuf::uint64> {
+      std::size_t operator()(google::protobuf::uint64 val) const { return static_cast<std::size_t>(val); }
     };
 
     template<>
-    struct hash<long long unsigned int> {
-      std::size_t operator()(long long unsigned int val) const { return static_cast<std::size_t>(val); }
+    struct hash<google::protobuf::int64> {
+      std::size_t operator()(google::protobuf::int64 val) const { return static_cast<std::size_t>(val); }
     };
 
     }  // namespace tr1
