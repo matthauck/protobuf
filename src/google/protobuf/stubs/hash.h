@@ -40,7 +40,6 @@
 
 #define GOOGLE_PROTOBUF_HAVE_HASH_MAP 1
 #define GOOGLE_PROTOBUF_HAVE_HASH_SET 1
-#define GOOGLE_PROTOBUF_HAVE_64BIT_HASH 1
 
 // Use C++11 unordered_{map|set} if available.
 #if ((_LIBCPP_STD_VER >= 11) || \
@@ -93,10 +92,6 @@
 #  define GOOGLE_PROTOBUF_HASH_SET_CLASS hash_set
 # endif
 
-# if __GNUC__ == 4 && __GNUC__MINOR__ <= 1
-#  undef GOOGLE_PROTOBUF_HAVE_64BIT_HASH
-# endif
-
 // Version checks for MSC.
 // Apparently Microsoft decided to move hash_map *back* to the std namespace in
 // MSVC 2010:
@@ -129,6 +124,13 @@
 #  include <hash_set>
 #  define GOOGLE_PROTOBUF_HASH_SET_CLASS hash_set
 #  define GOOGLE_PROTOBUF_HASH_COMPARE stdext::hash_compare
+# endif
+
+// GCC <= 4.1 does not define std::tr1::hash for `long long int` or `long long unsigned int`
+# if __GNUC__ == 4 && __GNUC__MINOR__ <= 1
+#  define GOOGLE_PROTOBUF_MISSING_HASH
+#  include <map>
+#  include <set>
 # endif
 
 // **ADD NEW COMPILERS SUPPORT HERE.**
